@@ -16,7 +16,7 @@ func (m MyIntSlice) Unique() []int {
 	var result []int
 	for _, currentValue := range m {
 		if _, ok := prevValueMap[currentValue]; !ok {
-			prevValueMap[currentValue] = !ok
+			prevValueMap[currentValue] = true
 			result = append(result, currentValue)
 		}
 	}
