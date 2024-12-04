@@ -1,0 +1,40 @@
+{{ define "notes/show.html"}}
+ {{ template "layouts/header.html" .}}
+ <script>
+  function sendDelete(event, href) {
+      var xhttp = new XMLHttpRequest();
+      event.preventDefault();
+      
+      xhttp.onreadystatechange = function() {
+          if(this.readyState !== 4) {
+              return;
+          }
+          
+          if(this.readyState === 4) {
+              window.location.replace(this.responseURL);
+          }
+      };
+  
+      xhttp.open("DELETE", href, true);
+      xhttp.send();
+  }
+  </script>
+    {{ range .}}
+      <div class="col">
+        <div class="card h-200">
+          <h5 class="">{{ .Name }}</h5>
+          <p class="card-text">{{ .Content}}</p>
+          <p>
+            <div class="btn-group">
+              <a href="/notes/edit/{{.ID}}" role="button" class="btn btn-outline-primary">Edit</a>
+              <a href="/notes/{{.ID}}" role="button" class="btn btn-outline-danger" onclick="sendDelete(event, this.href)">Delete</a>
+            </div>
+            <div class="btn-group">
+              <a href="/notes" role="button" class="btn">Index</a>
+            </div>
+          </p>
+        </div>
+      </div>
+    {{end}}
+  {{ template "layouts/footer.html" .}} 
+{{ end }}
